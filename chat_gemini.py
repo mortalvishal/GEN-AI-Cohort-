@@ -4,7 +4,7 @@ from google.genai import types
 
 load_dotenv()
 
-# client = genai.Client(api_key='AIzaSyCUjLTu_PUSoLhUFoB2g9SHUOdzh3PBklI')
+
 
  
 client = genai.Client()
