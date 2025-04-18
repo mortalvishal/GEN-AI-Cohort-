@@ -17,11 +17,19 @@ def get_weather(city:str):
         return f"The weather in {city} is {response.text}."
     return "Something went wrong"
 
+def add(x,y):
+    print("Tool Called: add", x, y)
+    return x+y
+
 available_tools = {
     "get_weather":{
         "fn": get_weather,
         "description": "Takes a city name as an input and return the current weather for the city"
-    }
+    },
+    # "add": {
+    #     "fn": add,
+    #     "description": "Takes two numbers x and y and return sum of the given inout that is x+y"
+    # }
 }
 
 system_prompt = f"""
@@ -59,34 +67,35 @@ messages = [
     { "role": "system", "content": system_prompt}
 ]
 
-user_query = input('> ')
-messages.append({ "role": "user", "content":user_query})
 while True:
-    response = client.completions.create(
-        model="gpt-4o",
-        response_format={"type":"json_object"},
-        messages=messages
-    )
-    
-    parsed_output = json.loads(response.choices[0].message.content)
-    messages.append({ "role": "assistant", "content": json.dumps(parsed_output) })
-    
-    if parsed_output.get("step") == "plan":
-        print(f"🧠:{parsed_response.get("content")} ")
-        continue
-    
-    if parsed_output.get("step") == "action":
-        tool_name = parsed_output.get("function")
-        tool_input = parsed_output.get("input")
+    user_query = input('> ')
+    messages.append({ "role": "user", "content":user_query})
+    while True:
+        response = client.completions.create(
+            model="gpt-4o",
+            response_format={"type":"json_object"},
+            messages=messages
+        )
         
-        if available_tools.get(tool_name, False) != False:
-            output = available_tools[tool_name].get("fn")(tool_input)
-            messages.append({ "role": "assistant", "content": json.dumps({ "step": "observe", "output": output})})
+        parsed_output = json.loads(response.choices[0].message.content)
+        messages.append({ "role": "assistant", "content": json.dumps(parsed_output) })
+        
+        if parsed_output.get("step") == "plan":
+            print(f"🧠:{parsed_response.get("content")} ")
             continue
         
-    if parsed_output.get("step") == "output":
-        print(f"🤖:{parsed_response.get("content")}")
-        break
+        if parsed_output.get("step") == "action":
+            tool_name = parsed_output.get("function")
+            tool_input = parsed_output.get("input")
+            
+            if available_tools.get(tool_name, False) != False:
+                output = available_tools[tool_name].get("fn")(tool_input)
+                messages.append({ "role": "assistant", "content": json.dumps({ "step": "observe", "output": output})})
+                continue
+            
+        if parsed_output.get("step") == "output":
+            print(f"🤖:{parsed_response.get("content")}")
+            break
     
 
 # response = client.completions.create(
