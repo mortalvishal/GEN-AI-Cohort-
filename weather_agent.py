@@ -1,10 +1,20 @@
 import json
 from dotenv import load_dotenv
 from openai import OpenAI
+import os
 
 load_dotenv()
 
 client = OpenAI()
+
+def query_db(sql):
+    pass
+
+def run_command(command):
+    result = os.system(command=command)
+    return result
+
+print(run_command("ls"))
 
 def get_weather(city:str):
     #TODO!: Do an actual API Call
@@ -26,6 +36,8 @@ available_tools = {
         "fn": get_weather,
         "description": "Takes a city name as an input and return the current weather for the city"
     },
+    "fn": run_command,
+    "description":"Takes a command as a input to execute on system output"
     # "add": {
     #     "fn": add,
     #     "description": "Takes two numbers x and y and return sum of the given inout that is x+y"
@@ -53,6 +65,7 @@ Output JSON Format:
 
 Available Tools:
 - get_weather: Takes a city name as an input and returns the current weather for the city
+- run_command: Takes a command as input to execute on system and returns output.
 
 Example:
 User Query: What is the weather of new york?
