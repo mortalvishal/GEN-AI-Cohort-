@@ -14,7 +14,7 @@ def run_command(command):
     result = os.system(command=command)
     return result
 
-print(run_command("ls"))
+# print(run_command("ls"))
 
 def get_weather(city:str):
     #TODO!: Do an actual API Call
