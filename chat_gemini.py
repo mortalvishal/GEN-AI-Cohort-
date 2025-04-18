@@ -4,8 +4,6 @@ from google.genai import types
 
 load_dotenv()
 
-
-
  
 client = genai.Client()
 
