@@ -21,7 +21,8 @@ embedder = OpenAIEmbeddings(
     api_key= "OPENAI_API_KEY",
 )
 
-vector_store = QdrantVectorStore.from_existing_collection(
+vector_store = QdrantVectorStore.from_documents(
+    documents=[],
     url="http://localhost:6333",
     collection_name="learning_langchain",
     embedding=embedder,
