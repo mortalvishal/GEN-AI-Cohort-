@@ -3,10 +3,12 @@ from dotenv import load_dotenv
 from openai import OpenAI
 import os
 from langchain_openai import ChatOpenAI
+from langfuse import Langfuse
 
 load_dotenv()
 
-client = ChatOpenAI(OpenAI())
+# client = ChatOpenAI(OpenAI())
+client = openai.Client()
 
 def run_command(command):
     result = os.system(command=command)
