@@ -2,13 +2,11 @@ import json
 from dotenv import load_dotenv
 from openai import OpenAI
 import os
+from langchain_openai import ChatOpenAI
 
 load_dotenv()
 
-client = OpenAI()
-
-def query_db(sql):
-    pass
+client = ChatOpenAI(OpenAI())
 
 def run_command(command):
     result = os.system(command=command)
