@@ -32,5 +32,4 @@ result = client.chat.completions.create(
         {"role": "user", "content": "Hey There"}  # zero shot prompting
         ]
 )
-
 print(result.choices[0].message.content)
