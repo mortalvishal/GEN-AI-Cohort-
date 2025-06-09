@@ -92,7 +92,6 @@ def solve_simple_question(state : State):
     )
     
     state["ai_message "]= result.choices[0].message.parsed.answer
-    
     return state
     
     
