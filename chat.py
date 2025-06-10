@@ -7,7 +7,7 @@ client = OpenAI()
 
 result = client.chat.completions.create(
     model="gpt-4",
-    messages= [{"role": "user", "content": "Hey There"}] # zero shot prompting
+    messages= [{"role": "user", "content": "Hey There"}]
 )
 
 print(result.choices[0].message.content)
